@@ -13,7 +13,10 @@ const SPEED_TO_ROT = 1.1;
 export const useDragPlaceholder = <
   T extends HTMLElement,
   U extends HTMLElement
->() => {
+>(
+  onDragStart: () => void,
+  onDragStop: () => void
+) => {
   const containerRef = useRef<T>(null);
   const contentRef = useRef<U>(null);
 
@@ -50,6 +53,7 @@ export const useDragPlaceholder = <
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseup", handleMouseUp);
       if (containerRef.current) {
+        containerRef.current.style.pointerEvents = "";
         containerRef.current.style.transform = "translate3d(0,0,0)";
         containerRef.current.style.transition = "transform 0.15s ease-out";
         containerRef.current.style.zIndex = "0";
@@ -58,6 +62,7 @@ export const useDragPlaceholder = <
         contentRef.current.style.transform = "rotateX(0) rotateY(0)";
         contentRef.current.style.transition = "transform 0.15s ease-out";
       }
+      onDragStop();
     };
 
     const loop = () => {
@@ -101,6 +106,7 @@ export const useDragPlaceholder = <
       lastUpdate = performance.now();
     };
 
+    containerRef.current.style.pointerEvents = "none";
     containerRef.current.style.transition = "";
     containerRef.current.style.zIndex = "100";
     contentRef.current.style.transition = "";
@@ -109,6 +115,7 @@ export const useDragPlaceholder = <
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("mouseup", handleMouseUp);
     loop();
+    onDragStart();
   };
 
   return {

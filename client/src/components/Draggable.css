@@ -1,6 +1,6 @@
 .Draggable {
-  --card-height: 20rem;
-  --card-width: 12rem;
+  --card-height: 10rem;
+  --card-width: 10rem;
 
   display: flex;
   perspective: calc(var(--card-height) * 2);
