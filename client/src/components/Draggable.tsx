@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import "./Draggable.css";
 import { useDragPlaceholder } from "../hooks/useDragPlaceholder";
@@ -9,19 +9,24 @@ interface Props {
 }
 
 export const Draggable: React.FC<Props> = ({ index }) => {
-  const { dispatch } = useDndContext();
+  const { state, dispatch } = useDndContext();
 
   const handleDragStart = () => {
     dispatch({ type: "DRAG_START", dragIndex: index });
   };
+
   const handleDragStop = () => {
-    dispatch({ type: "DRAG_STOP" });
+    dispatch({ type: "DRAG_STOP", from: index });
   };
+
+  useEffect(() => {
+    console.log("mounting");
+  }, []);
 
   const { containerProps, contentProps } = useDragPlaceholder<
     HTMLDivElement,
     HTMLDivElement
-  >(handleDragStart, handleDragStop);
+  >(state.dragging, handleDragStart, handleDragStop);
 
   return (
     <div className="Draggable" {...containerProps}>

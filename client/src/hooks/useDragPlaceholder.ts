@@ -1,10 +1,9 @@
-import { useRef } from "react";
+import { useRef, useLayoutEffect } from "react";
 
 import { clamp } from "../utils";
 
 // default assumed frame time in ms
 const DEFAULT_FRAME_TIME = 16;
-
 const MOVE_DRAG_FACTOR = 0.25;
 const ROT_DRAG_FACTOR = 0.1;
 // how far the card should rotate (degs) per unit speed (px / frame)
@@ -14,11 +13,30 @@ export const useDragPlaceholder = <
   T extends HTMLElement,
   U extends HTMLElement
 >(
+  dragging: boolean,
   onDragStart: () => void,
   onDragStop: () => void
 ) => {
   const containerRef = useRef<T>(null);
   const contentRef = useRef<U>(null);
+
+  // settle into its natural position
+  useLayoutEffect(() => {
+    console.log("dragging changed..");
+
+    if (!dragging) {
+      if (containerRef.current) {
+        containerRef.current.style.pointerEvents = "";
+        containerRef.current.style.transform = "translate3d(0,0,0)";
+        containerRef.current.style.transition = "transform 0.15s ease-out";
+        containerRef.current.style.zIndex = "0";
+      }
+      if (contentRef.current) {
+        contentRef.current.style.transform = "rotateX(0) rotateY(0)";
+        contentRef.current.style.transition = "transform 0.15s ease-out";
+      }
+    }
+  }, [dragging]);
 
   const handleMouseDown = (event: React.MouseEvent) => {
     if (!containerRef.current || !contentRef.current) {
@@ -91,7 +109,6 @@ export const useDragPlaceholder = <
       // rotate content
       const velX = (cardX - prevCardX) / relativeDt;
       const velY = (cardY - prevCardY) / relativeDt;
-
       // card always attempts to rotate to be flat, is counteracted by its velocity
       const targetRotX = -rotX - velY * SPEED_TO_ROT;
       const targetRotY = -rotY + velX * SPEED_TO_ROT;

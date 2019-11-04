@@ -13,11 +13,17 @@ export const Board: React.FC<Props> = () => {
 
   return (
     <div className="Board">
-      {state.items.map((slot, i) => (
-        <Slot key={i}>
-          {slot ? <Draggable index={i} /> : <Droppable index={i} />}
-        </Slot>
-      ))}
+      {state.items.map((slot, i) =>
+        slot ? (
+          <Slot key={slot.id}>
+            <Draggable index={i} />
+          </Slot>
+        ) : (
+          <Slot key={i}>
+            <Droppable index={i} />
+          </Slot>
+        )
+      )}
     </div>
   );
 };

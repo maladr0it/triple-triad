@@ -6,13 +6,24 @@ export interface State {
 
 export type Action =
   | { type: "DRAG_START"; dragIndex: number }
-  | { type: "DRAG_STOP" }
+  | { type: "DRAG_STOP"; from: number }
   | { type: "HOVER"; hoverIndex: number }
-  | { type: "HOVER_STOP" }
-  | { type: "MOVE"; to: number; from: number };
+  | { type: "HOVER_STOP" };
 
 export const initialState = {
-  items: [1, null, null, null, null, null, null, null, null],
+  items: [
+    {
+      id: "001"
+    },
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
   dragging: false,
   hoverIndex: null
 };
@@ -28,8 +39,23 @@ export const dndReducer = (state: State, action: Action) => {
       };
     }
     case "DRAG_STOP": {
+      const { from } = action;
+      const { hoverIndex: to } = state;
+
+      if (to === null) {
+        return {
+          ...state,
+          dragging: false,
+          hoverIndex: null
+        };
+      }
+
+      const newItems = [...state.items];
+      const [itemToMove] = newItems.splice(from, 1);
+      newItems.splice(to, 0, itemToMove);
       return {
         ...state,
+        items: newItems,
         dragging: false,
         hoverIndex: null
       };
@@ -47,18 +73,7 @@ export const dndReducer = (state: State, action: Action) => {
         hoverIndex: null
       };
     }
-    case "MOVE": {
-      const { to, from } = action;
-      const newItems = [...state.items];
-      const [itemToMove] = newItems.splice(from, 1);
-      newItems.splice(to, 0, itemToMove);
-      return {
-        ...state,
-        items: newItems,
-        dragging: false,
-        hoverIndex: null
-      };
-    }
+
     default:
       return state;
   }
