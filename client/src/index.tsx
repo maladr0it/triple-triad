@@ -1,19 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { DragDropContext, DropResult } from "react-beautiful-dnd";
-
 import "./index.css";
 import { App } from "./App";
+
+import { DndContextProvider } from "./DndContext";
+
 import * as serviceWorker from "./serviceWorker";
 
-const onDragEnd = (dropResult: DropResult) => {
-  console.log(dropResult);
-};
-
 ReactDOM.render(
-  <DragDropContext onDragEnd={onDragEnd}>
+  <DndContextProvider>
     <App />
-  </DragDropContext>,
+  </DndContextProvider>,
   document.getElementById("root")
 );
 

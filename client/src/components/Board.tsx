@@ -1,17 +1,29 @@
 import React from "react";
 
-import { useGameContext } from "GameContext";
 import "./Board.css";
+import { useDndContext } from "../DndContext";
 import { Slot } from "./Slot";
+import { Draggable } from "./Draggable";
+import { Droppable } from "./Droppable";
 
-export const Board = () => {
-  const [state] = useGameContext();
-  
+interface Props {}
+
+export const Board: React.FC<Props> = () => {
+  const { state } = useDndContext();
+
   return (
     <div className="Board">
-      {state.board.map((_, i) => (
-        <Slot key={i} index={i} />
-      ))}
+      {state.items.map((slot, i) =>
+        slot ? (
+          <Slot key={slot.id}>
+            <Draggable index={i} />
+          </Slot>
+        ) : (
+          <Slot key={i}>
+            <Droppable index={i} />
+          </Slot>
+        )
+      )}
     </div>
   );
 };
