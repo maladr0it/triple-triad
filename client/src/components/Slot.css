@@ -1,8 +1,6 @@
 .Slot {
-  display: flex;
-  height: 15rem;
-  width: 15rem;
-  align-items: center;
-  justify-content: center;
-  background-color: peachpuff;
+  padding: 0.5rem;
+  width: 5rem;
+  height: 5rem;
+  background-color: pink;
 }

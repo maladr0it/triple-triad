@@ -1,6 +1,6 @@
 .Board {
   display: inline-grid;
-  /* background: yellow; */
+  background: red;
   grid-gap: 1rem;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
