@@ -120,6 +120,9 @@ export const useDragPlaceholder = <
 
       prevCardY = cardY;
       prevCardX = cardX;
+
+      console.log(cardX, cardY);
+
       lastUpdate = performance.now();
     };
 

@@ -1,12 +1,19 @@
+interface Pos {
+  x: number;
+  y: number;
+}
+
 export interface State {
   items: any[];
   dragging: boolean;
   hoverIndex: number | null;
+  dropPos: Pos | null;
+  dragId: string; // ID of the item being dragged
 }
 
 export type Action =
   | { type: "DRAG_START"; dragIndex: number }
-  | { type: "DRAG_STOP"; from: number }
+  | { type: "DRAG_STOP"; from: number; dropPos: Pos }
   | { type: "HOVER"; hoverIndex: number }
   | { type: "HOVER_STOP" };
 
@@ -25,10 +32,14 @@ export const initialState = {
     null
   ],
   dragging: false,
-  hoverIndex: null
+  hoverIndex: null,
+  dropPos: null,
+  dragId: ""
 };
 
 export const dndReducer = (state: State, action: Action) => {
+  console.log(state, action);
+
   switch (action.type) {
     case "DRAG_START": {
       const { dragIndex } = action;
@@ -39,7 +50,7 @@ export const dndReducer = (state: State, action: Action) => {
       };
     }
     case "DRAG_STOP": {
-      const { from } = action;
+      const { from, dropPos } = action;
       const { hoverIndex: to } = state;
 
       if (to === null) {
@@ -57,7 +68,8 @@ export const dndReducer = (state: State, action: Action) => {
         ...state,
         items: newItems,
         dragging: false,
-        hoverIndex: null
+        hoverIndex: null,
+        dropPos
       };
     }
     case "HOVER": {

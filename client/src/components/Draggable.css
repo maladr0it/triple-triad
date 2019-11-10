@@ -3,8 +3,6 @@
   --card-width: 10rem;
 
   display: flex;
-  perspective: calc(var(--card-height) * 2);
-  transform-style: preserve-3d;
 }
 
 .Draggable-content {
