@@ -1,88 +1,81 @@
+// The purpose is to track what you are currently dragging
+
 interface Pos {
   x: number;
   y: number;
 }
 
+// TODO: reconsider naming
+interface EventLoc {
+  id: string;
+  index: number;
+}
+
 export interface State {
-  items: any[];
+  origin: EventLoc | null; // from what location are we dragging from
+  destination: EventLoc | null;
+  hoverLoc: EventLoc | null; // what location are we dragging over
+  dragId: string | null; // ID of the item being dragged
+  dropPos: Pos | null; // screen coords where last item was dropped
   dragging: boolean;
-  hoverIndex: number | null;
-  dropPos: Pos | null;
-  dragId: string; // ID of the item being dragged
 }
 
 export type Action =
-  | { type: "DRAG_START"; dragIndex: number }
-  | { type: "DRAG_STOP"; from: number; dropPos: Pos }
-  | { type: "HOVER"; hoverIndex: number }
-  | { type: "HOVER_STOP" };
+  | { type: "DRAG_START"; dragId: string; origin: EventLoc }
+  | { type: "DRAG_END"; dropPos: Pos }
+  | { type: "HOVER"; hoverLoc: EventLoc }
+  | { type: "HOVER_END" };
 
-export const initialState = {
-  items: [
-    {
-      id: "001"
-    },
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null
-  ],
-  dragging: false,
-  hoverIndex: null,
+export const initialState: State = {
+  origin: null,
+  destination: null,
+  hoverLoc: null,
   dropPos: null,
-  dragId: ""
+  dragId: null,
+  dragging: false,
 };
 
 export const dndReducer = (state: State, action: Action) => {
-  console.log(state, action);
+  // console.log(state, action);
 
   switch (action.type) {
     case "DRAG_START": {
-      const { dragIndex } = action;
+      const { dragId, origin } = action;
       return {
         ...state,
+        origin: origin,
+        destination: null,
+        dropPos: null,
         dragging: true,
-        hoverIndex: dragIndex
+        dragId,
       };
     }
-    case "DRAG_STOP": {
-      const { from, dropPos } = action;
-      const { hoverIndex: to } = state;
 
-      if (to === null) {
-        return {
-          ...state,
-          dragging: false,
-          hoverIndex: null
-        };
-      }
+    case "DRAG_END": {
+      const { dropPos } = action;
+      const { hoverLoc } = state;
 
-      const newItems = [...state.items];
-      const [itemToMove] = newItems.splice(from, 1);
-      newItems.splice(to, 0, itemToMove);
       return {
         ...state,
-        items: newItems,
+        destination: hoverLoc,
         dragging: false,
-        hoverIndex: null,
-        dropPos
+        hoverLoc: null,
+        dropPos,
       };
     }
+
     case "HOVER": {
-      const { hoverIndex } = action;
+      const { hoverLoc } = action;
       return {
         ...state,
-        hoverIndex
+        hoverLoc,
       };
     }
-    case "HOVER_STOP": {
+
+    case "HOVER_END": {
       return {
         ...state,
-        hoverIndex: null
+        hoverLoc: null,
       };
     }
 

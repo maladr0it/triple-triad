@@ -6,7 +6,7 @@ interface Pos {
 export const useDrag = <T extends HTMLElement>(
   itemRef: React.MutableRefObject<T | null>,
   onDragStart: () => void,
-  onDragEnd: (pos: Pos) => void
+  onDragEnd: (pos: Pos) => void,
 ) => {
   const handleMouseDown = (event: React.MouseEvent) => {
     if (!itemRef.current) return;
@@ -31,7 +31,7 @@ export const useDrag = <T extends HTMLElement>(
       window.removeEventListener("mouseup", handleMouseUp);
       if (itemRef.current) {
         itemRef.current.style.pointerEvents = "";
-        itemRef.current.style.position = "inherit";
+        itemRef.current.style.position = "";
         itemRef.current.style.transform = "";
         itemRef.current.style.left = "";
         itemRef.current.style.top = "";
@@ -61,6 +61,6 @@ export const useDrag = <T extends HTMLElement>(
   };
 
   return {
-    onMouseDown: handleMouseDown
+    onMouseDown: handleMouseDown,
   };
 };

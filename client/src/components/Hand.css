@@ -1,0 +1,7 @@
+.Hand {
+  display: flex;
+}
+
+.Hand > * {
+  margin-right: 1rem;
+}

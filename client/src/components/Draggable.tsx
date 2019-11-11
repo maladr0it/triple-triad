@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 
 import "./Draggable.css";
 import { useDrag } from "hooks/useDrag";
-import { useAnimateFrom } from "hooks/useAnimateFrom";
+import { useDropAnim } from "hooks/useDropAnim";
 import { useDndContext } from "DndContext";
 
 interface Pos {
@@ -11,23 +11,32 @@ interface Pos {
 }
 
 interface Props {
+  dragId: string;
+  dropAreaId: string;
   index: number;
 }
 
-export const Draggable: React.FC<Props> = ({ index }) => {
+export const Draggable: React.FC<Props> = ({ dragId, dropAreaId, index }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { state, dispatch } = useDndContext();
+  const { state, dispatch, onDragEnd } = useDndContext();
 
   const handleDragStart = () => {
-    dispatch({ type: "DRAG_START", dragIndex: index });
+    dispatch({
+      type: "DRAG_START",
+      dragId,
+      origin: {
+        id: dropAreaId,
+        index,
+      },
+    });
   };
 
   const handleDragEnd = (dropPos: Pos) => {
-    dispatch({ type: "DRAG_STOP", from: index, dropPos });
+    dispatch({ type: "DRAG_END", dropPos });
   };
 
   const dragProps = useDrag(containerRef, handleDragStart, handleDragEnd);
-  useAnimateFrom(containerRef, state.dropPos);
+  useDropAnim(containerRef, state.dropPos, state.dragId === dragId);
 
   return (
     <div className="Draggable" ref={containerRef} {...dragProps}>

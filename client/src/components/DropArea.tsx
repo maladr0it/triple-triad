@@ -1,35 +1,36 @@
 import React from "react";
 
-import "./Droppable.css";
+import "./DropArea.css";
 import { useDndContext } from "../DndContext";
 
 interface Props {
+  dropAreaId: string;
   index: number;
 }
 
-export const Droppable: React.FC<Props> = ({ index }) => {
+export const DropArea: React.FC<Props> = ({ dropAreaId }) => {
   const { state, dispatch } = useDndContext();
-  const { hoverIndex, dragging } = state;
+  const { dragging } = state;
 
   const handleMouseEnter = () => {
     if (dragging) {
-      dispatch({ type: "HOVER", hoverIndex: index });
+      dispatch({ type: "HOVER", hoverLoc: { id: dropAreaId, index: 0 } });
     }
   };
 
   const handleMouseLeave = () => {
     if (dragging) {
-      dispatch({ type: "HOVER_STOP" });
+      dispatch({ type: "HOVER_END" });
     }
   };
 
   return (
     <div
-      className="Droppable"
+      className="DropArea"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {hoverIndex === index ? "HOVERIN" : ""}
+      {state.hoverLoc && state.hoverLoc.id === dropAreaId && "HOVERIN"}
     </div>
   );
 };

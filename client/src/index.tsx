@@ -8,7 +8,7 @@ import { DndContextProvider } from "./DndContext";
 import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
-  <DndContextProvider>
+  <DndContextProvider onDragEnd={e => console.log(e)}>
     <App />
   </DndContextProvider>,
   document.getElementById("root")
