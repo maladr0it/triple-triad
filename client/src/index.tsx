@@ -1,17 +1,25 @@
 import React from "react";
 import ReactDOM from "react-dom";
+
+import { GameContextProvider } from "GameContext";
+
 import "./index.css";
+import * as serviceWorker from "./serviceWorker";
 import { App } from "./App";
 
-import { DndContextProvider } from "./DndContext";
-
-import * as serviceWorker from "./serviceWorker";
+const initialState = {
+  hand: [
+    { id: "foo", name: "Foo the great" },
+    { id: "bar", name: "Bar the stronk" },
+  ],
+  board: [null, null, null, null, null, null, null, null, null],
+};
 
 ReactDOM.render(
-  <DndContextProvider onDragEnd={e => console.log(e)}>
+  <GameContextProvider initialState={initialState}>
     <App />
-  </DndContextProvider>,
-  document.getElementById("root")
+  </GameContextProvider>,
+  document.getElementById("root"),
 );
 
 // If you want your app to work offline and load faster, you can change

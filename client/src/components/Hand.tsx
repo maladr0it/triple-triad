@@ -1,25 +1,26 @@
 import React from "react";
+import { Droppable } from "react-beautiful-dnd";
 
-import { Draggable } from "components/Draggable";
 import "./Hand.css";
-
-const HAND_ITEMS = [
-  {
-    id: "foo",
-    name: "FooName",
-  },
-  {
-    id: "bar",
-    name: "BarName",
-  },
-];
+import { Card } from "components/Card";
+import { useGameContext } from "GameContext";
 
 export const Hand = () => {
+  const { state } = useGameContext();
   return (
-    <div className="Hand">
-      {HAND_ITEMS.map((item, i) => (
-        <Draggable key={item.id} dropAreaId="HAND" dragId={item.id} index={i} />
-      ))}
-    </div>
+    <Droppable droppableId="hand" type="CARD" direction="horizontal">
+      {(provided) => (
+        <div
+          className="Hand"
+          ref={provided.innerRef}
+          {...provided.droppableProps}
+        >
+          {state.hand.map((card, i) => (
+            <Card key={card.id} id={card.id} index={i} name={card.name} />
+          ))}
+          {provided.placeholder}
+        </div>
+      )}
+    </Droppable>
   );
 };

@@ -1,0 +1,5 @@
+.App {
+  --card-width: 10rem;
+  --card-height: 10rem;
+  user-select: none;
+}
