@@ -1,16 +1,16 @@
 import React from "react";
 
-import { DropName } from "types";
 import { useGameContext } from "GameContext";
-import { CardSlot } from "components/CardSlot";
+import { HandSlot } from "./_HandSlot";
 import "./Hand.css";
 
 export const Hand = () => {
   const { state } = useGameContext();
+  const { hand } = state;
   return (
     <div className="Hand">
-      {state.hand.map((_, i) => (
-        <CardSlot key={i} slotType={DropName.Hand} index={i} />
+      {hand.map((_, i) => (
+        <HandSlot key={i} index={i} />
       ))}
     </div>
   );

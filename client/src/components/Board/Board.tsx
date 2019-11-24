@@ -1,14 +1,16 @@
 import React from "react";
 
-import { DropName } from "types";
+import { useGameContext } from "GameContext";
+import { BoardSlot } from "./_BoardSlot";
 import "./Board.css";
-import { CardSlot } from "components/CardSlot";
 
 export const Board = () => {
+  const { state } = useGameContext();
+  const { board } = state;
   return (
     <div className="Board">
-      {[...Array(9)].map((_, i) => (
-        <CardSlot key={i} slotType={DropName.Board} index={i} />
+      {board.map((_, i) => (
+        <BoardSlot index={i} />
       ))}
     </div>
   );

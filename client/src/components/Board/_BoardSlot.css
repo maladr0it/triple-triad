@@ -1,0 +1,14 @@
+.BoardSlot {
+  padding: 1rem;
+  background-color: tomato;
+  transition: background-color 0.3s;
+}
+
+.BoardSlot--dragover {
+  background-color: red;
+}
+
+.BoardSlot-socket {
+  height: var(--card-height);
+  width: var(--card-width);
+}

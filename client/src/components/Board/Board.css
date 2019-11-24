@@ -2,6 +2,14 @@
   display: inline-grid;
   grid-gap: 1rem;
   grid-template-columns: repeat(3, auto);
-
   background-color: turquoise;
+}
+
+.Board-space {
+  background-color: tomato;
+  padding: 1rem;
+}
+
+.Board-space--dragover {
+  background-color: pink;
 }

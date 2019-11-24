@@ -7,7 +7,7 @@ interface Props {
   id: string;
   index: number;
   name: string;
-  isDragDisabled?: boolean;
+  dragDisabled?: boolean;
   style?: React.CSSProperties;
 }
 
@@ -15,11 +15,11 @@ export const Card: React.FC<Props> = ({
   id,
   index,
   name,
-  isDragDisabled = false,
+  dragDisabled = false,
   style,
 }) => {
   return (
-    <Draggable draggableId={id} index={index} isDragDisabled={isDragDisabled}>
+    <Draggable draggableId={id} index={index} isDragDisabled={dragDisabled}>
       {(provided) => {
         const appliedStyle = { ...style, ...provided.draggableProps.style };
         return (
