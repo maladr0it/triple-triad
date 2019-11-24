@@ -11,6 +11,9 @@ const initialState = {
   hand: [
     { id: "foo", name: "Foo the great" },
     { id: "bar", name: "Bar the stronk" },
+    { id: "baz", name: "Baz the champ" },
+    { id: "qux", name: "Qux the mate" },
+    { id: "shiv", name: "Shiva god of war" },
   ],
   board: [null, null, null, null, null, null, null, null, null],
 };

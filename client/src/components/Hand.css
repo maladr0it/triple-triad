@@ -1,7 +1,5 @@
 .Hand {
   display: flex;
-}
-
-.Hand > * {
-  margin-right: 1rem;
+  height: var(--card-height);
+  background-color: grey;
 }

@@ -1,0 +1,14 @@
+.CardSlot {
+  background-color: red;
+  padding: 1rem;
+  transition: background-color 0.25s linear;
+}
+
+.CardSlot--dragOver {
+  background-color: rebeccapurple;
+}
+
+.CardSlot-socket {
+  height: var(--card-height);
+  width: var(--card-width);
+}

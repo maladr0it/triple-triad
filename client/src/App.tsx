@@ -1,7 +1,7 @@
 import React from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 
-import { BOARD, HAND } from "dropNames";
+import { DropName } from "types";
 import { useGameContext } from "GameContext";
 import { Board } from "components/Board";
 import { Hand } from "components/Hand";
@@ -13,12 +13,15 @@ export const App: React.FC = () => {
   const handleDragEnd = (result: DropResult) => {
     if (!result.destination) return;
     const { source, destination } = result;
+    const [sourceType, sourceNum] = source.droppableId.split("-");
     const [destType, destNum] = destination.droppableId.split("-");
 
-    if (destType === BOARD && source.droppableId === HAND) {
+    console.log(source, destination);
+
+    if (sourceType === DropName.Hand && destType === DropName.Board) {
       dispatch({
         type: "CARD_PLAYED",
-        handPos: source.index,
+        handPos: parseInt(sourceNum, 10),
         boardPos: parseInt(destNum, 10),
       });
     }

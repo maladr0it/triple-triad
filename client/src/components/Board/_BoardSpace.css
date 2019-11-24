@@ -1,6 +1,0 @@
-.BoardSpace {
-  height: var(--card-height);
-  width: var(--card-width);
-
-  background-color: red;
-}

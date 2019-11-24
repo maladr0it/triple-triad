@@ -8,6 +8,7 @@ interface Props {
   index: number;
   name: string;
   isDragDisabled?: boolean;
+  style?: React.CSSProperties;
 }
 
 export const Card: React.FC<Props> = ({
@@ -15,19 +16,24 @@ export const Card: React.FC<Props> = ({
   index,
   name,
   isDragDisabled = false,
+  style,
 }) => {
   return (
     <Draggable draggableId={id} index={index} isDragDisabled={isDragDisabled}>
-      {(provided) => (
-        <div
-          className="Card"
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-        >
-          {name} - {id}
-        </div>
-      )}
+      {(provided) => {
+        const appliedStyle = { ...style, ...provided.draggableProps.style };
+        return (
+          <div
+            className="Card"
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            style={appliedStyle}
+          >
+            {name} - {id}
+          </div>
+        );
+      }}
     </Draggable>
   );
 };

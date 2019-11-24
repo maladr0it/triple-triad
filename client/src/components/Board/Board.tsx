@@ -1,13 +1,14 @@
 import React from "react";
 
-import { BoardSpace } from "./_BoardSpace";
+import { DropName } from "types";
 import "./Board.css";
+import { CardSlot } from "components/CardSlot";
 
 export const Board = () => {
   return (
     <div className="Board">
       {[...Array(9)].map((_, i) => (
-        <BoardSpace key={i} index={i} />
+        <CardSlot key={i} slotType={DropName.Board} index={i} />
       ))}
     </div>
   );
