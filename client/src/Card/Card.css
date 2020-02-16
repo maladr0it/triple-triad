@@ -1,0 +1,40 @@
+.Card {
+  --cardWidth: 10rem;
+  --cardHeight: 10rem;
+
+  width: var(--cardWidth);
+  height: var(--cardHeight);
+  background-color: lightblue;
+}
+
+.Card-sides {
+  display: inline-grid;
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
+  font-size: 1.5rem;
+  grid-template-columns: 1.5ch 1.5ch;
+  grid-template-areas: "top top" "left right" "bottom bottom";
+}
+
+.Card-side {
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  text-shadow: 2px 2px 0px black;
+}
+
+.Card-side--top {
+  grid-area: top;
+}
+
+.Card-side--right {
+  grid-area: right;
+}
+
+.Card-side--bottom {
+  grid-area: bottom;
+}
+
+.Card-side--left {
+  grid-area: left;
+}
