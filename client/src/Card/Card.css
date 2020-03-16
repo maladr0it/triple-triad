@@ -1,17 +1,24 @@
 .Card {
-  --cardWidth: 10rem;
-  --cardHeight: 10rem;
+  --cardWidth: 80px;
+  --cardHeight: 80px;
 
   width: var(--cardWidth);
   height: var(--cardHeight);
+}
+
+.Card--p1 {
   background-color: lightblue;
+}
+
+.Card--p2 {
+  background-color: lightsalmon;
 }
 
 .Card-sides {
   display: inline-grid;
-  margin-top: 0.5rem;
-  margin-left: 0.5rem;
-  font-size: 1.5rem;
+  margin-top: 4px;
+  margin-left: 4px;
+  font-size: 1rem;
   grid-template-columns: 1.5ch 1.5ch;
   grid-template-areas: "top top" "left right" "bottom bottom";
 }

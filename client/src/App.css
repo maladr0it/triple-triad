@@ -1,3 +1,18 @@
+.App-container {
+  position: relative;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  color: white;
+}
+
 .App {
-  background: red;
+  position: absolute;
+  height: 500px;
+  width: 320px;
+  display: grid;
+  place-items: center;
+  outline: 1px solid white;
 }

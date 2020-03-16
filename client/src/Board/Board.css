@@ -1,0 +1,10 @@
+.Board {
+  --slotWidth: 88px;
+  --slotHeight: 88px;
+
+  display: grid;
+  grid-gap: 4px;
+  justify-content: center;
+  grid-template-columns: repeat(3, var(--slotWidth));
+  grid-template-rows: repeat(3, var(--slotHeight));
+}

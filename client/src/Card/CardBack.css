@@ -1,0 +1,7 @@
+.CardBack {
+  --cardWidth: 80px;
+  --cardHeight: 80px;
+
+  width: var(--cardWidth);
+  height: var(--cardHeight);
+}

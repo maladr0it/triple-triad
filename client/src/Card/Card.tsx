@@ -1,17 +1,25 @@
 import React from "react";
+import classNames from "classnames";
 
 import "./Card.css";
-import { ICard } from "./types";
+import { PlayerName } from "../types";
+import { cardData } from "./cardData";
 import { cardBgStyle } from "./cardBgStyle";
 
-interface Props extends ICard {
+interface Props {
   id: string;
+  player: PlayerName;
 }
 
-export const Card: React.FC<Props> = ({ id, name, sides, image }) => {
+export const Card = ({ id, player }: Props) => {
+  const { name, sides, image } = cardData[id];
+
   return (
     <div
-      className="Card"
+      className={classNames("Card", {
+        "Card--p1": player === "p1",
+        "Card--p2": player === "p2",
+      })}
       style={cardBgStyle(image.sheetIndex, image.spriteIndex)}
     >
       <ul className="Card-sides">

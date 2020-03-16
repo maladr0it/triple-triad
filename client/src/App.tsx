@@ -1,50 +1,45 @@
-import React, { useRef, useLayoutEffect } from "react";
+import React from "react";
 import "./App.css";
 
-import { Card } from "./Card";
-import { ICard } from "./Card/types";
+import { GameContextProvider, State } from "./gameContext";
+import { useAppScale } from "./useAppScale";
+import { Hand } from "./Hand";
+import { Board } from "./Board";
 
-const CARDS: ICard[] = [
-  {
-    name: "Shiva",
-    sides: [1, 2, 3, 4],
-    image: {
-      sheetIndex: 0,
-      spriteIndex: 0,
-    },
+const INITIAL_STATE: State = {
+  hands: {
+    p1: ["001", "002"],
+    p2: [null, null],
   },
-  {
-    name: "Shiva",
-    sides: [1, 2, 3, 4],
-    image: {
-      sheetIndex: 0,
-      spriteIndex: 2,
-    },
-  },
-];
-
-const GAME_HEIGHT_UNITS = 100;
-const GAME_WIDTH_UNITS = 60;
+  board: [
+    null,
+    { player: "p1", id: "002" },
+    null,
+    { player: "p2", id: "001" },
+    null,
+    null,
+    null,
+    null,
+    null,
+  ],
+};
 
 const App = () => {
-  const gameContainerRef = useRef<HTMLDivElement>(null);
-  const gameRef = useRef<HTMLDivElement>(null);
-
-  useLayoutEffect(() => {
-    if (gameContainerRef.current && gameRef.current) {
-    }
-
-    return () => {};
-  }, []);
+  const { containerRef, appRef } = useAppScale<
+    HTMLDivElement,
+    HTMLDivElement
+  >();
 
   return (
-    <div className="App" ref={gameContainerRef}>
-      <div className="Game" ref={gameRef}>
-        <Card id="001" {...CARDS[0]} />
-        <br></br>
-        <Card id="001" {...CARDS[1]} />
+    <GameContextProvider initialState={INITIAL_STATE}>
+      <div className="App-container" ref={containerRef}>
+        <div className="App" ref={appRef}>
+          <Hand player="p2" />
+          <Board />
+          <Hand player="p1" />
+        </div>
       </div>
-    </div>
+    </GameContextProvider>
   );
 };
 
